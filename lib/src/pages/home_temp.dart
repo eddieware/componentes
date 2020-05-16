@@ -26,11 +26,16 @@ class HomePageTemp extends StatelessWidget {
       final tempWidget = ListTile(
         title: Text(opt),
       );
-      lista.add(tempWidget);
-      lista.add(Divider(height: 5,color: Colors.blue,));
+      lista..add(tempWidget)
+          ..add(Divider(height: 5,color: Colors.blue,));
       
     }
 
     return lista;
+  }
+
+
+
+    List<Widget> _crearItemsCorta(){
   }
 }
