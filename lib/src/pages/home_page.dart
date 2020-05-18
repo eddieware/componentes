@@ -1,4 +1,8 @@
+
+
+import 'package:componentes/src/pages/alert_page.dart';
 import 'package:componentes/src/providers/menu_provider.dart';
+import 'package:componentes/src/utils/icono_string_util.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,11 +28,9 @@ class HomePage extends StatelessWidget {
        // el builder se disparara en alguna de sus tres etapas
        // el builder debe regresar un widget creado con la info del future
      
-       print('here2');
-         print(snapshot.data);
       
         return ListView(
-        children: _listaItems(snapshot.data), // aqui se envia la lista dinamica a _listaItems
+        children: _listaItems(snapshot.data, context), // aqui se envia la lista dinamica a _listaItems
         );
          
 
@@ -39,7 +41,7 @@ class HomePage extends StatelessWidget {
   
  }
 
-  List<Widget>_listaItems(List<dynamic> data) {
+  List<Widget>_listaItems(List<dynamic> data, BuildContext context) {
     
     final List<Widget> opciones =[];
 
@@ -47,10 +49,17 @@ class HomePage extends StatelessWidget {
 
       final widgetnTemp = ListTile(
         title:Text(opt['texto']) , // para apuntar a las llaves texto de cada elemento del json
-        leading: Icon(Icons.account_circle),
+        leading: getIcon(opt['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
-
+        // Navegacion
         onTap: (){
+
+          final route = MaterialPageRoute(
+            builder: (context)=>AlertPage()
+            
+            );
+
+          Navigator.push(context, route);
 
 
         },
