@@ -54,12 +54,14 @@ class HomePage extends StatelessWidget {
         // Navegacion
         onTap: (){
 
-          final route = MaterialPageRoute(
-            builder: (context)=>AlertPage()
-            
-            );
+          Navigator.pushNamed(context, opt['ruta']);
 
-          Navigator.push(context, route);
+          // final route = MaterialPageRoute(
+          //   builder: (context)=>AlertPage()
+            
+          //   );
+
+          // Navigator.push(context, route);
 
 
         },
