@@ -11,7 +11,10 @@ class CardPage extends StatelessWidget {
        ListView(
          padding: EdgeInsets.symmetric(horizontal:20, vertical: 10.0),
          children: <Widget>[
-           _cardTipo1()
+           _cardTipo1(),
+
+           SizedBox(height: 30.0),
+           _cardTipo2()
 
          ],
 
@@ -48,4 +51,31 @@ class CardPage extends StatelessWidget {
        ),
      );
    }
+   _cardTipo2(){
+
+     return Card(
+       child: Column(
+         children: <Widget>[
+           FadeInImage(
+           
+           placeholder: AssetImage('assets/jar-loading.gif'),
+
+           image: NetworkImage('https://jooinn.com/images/perfect-landscape-1.jpg'),  
+           fadeInDuration: Duration(milliseconds: 200),
+           height: 300,
+           fit: BoxFit.cover, // para cubrir a lo largo y ancho de la tarjeta 
+           ),
+          //  Image(
+          //    image: NetworkImage('https://www.publicdomainpictures.net/pictures/30000/velka/evening-landscape-13530956185Aw.jpg') ,
+          //  ),
+           Container(
+             padding: EdgeInsets.all(10.0),
+             child: Text('Something here')
+             )
+         ]
+       ),
+     );
+   }
+
+
 }
