@@ -5,9 +5,9 @@ class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-
+//https://www.netflix.com/watch/80185236?trackId=155573560
 class _InputPageState extends State<InputPage> {
-  String _nombre;
+  String _nombre='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _InputPageState extends State<InputPage> {
           //personalizar que tan pronunciados quiero los border
           borderRadius: BorderRadius.circular(20)
         ),
-        counter: Text('Letras ${_nombre.length}'),
+        counter: Text('Letras ${_nombre.length} '),
         hintText: 'Nombre de la persona',
         labelText: 'Nombre',
         helperText: 'Solo es el Nombre',
@@ -62,7 +62,9 @@ class _InputPageState extends State<InputPage> {
   }
 
   Widget _crearPersona(){
+    
     return ListTile(
+      
       title: Text('Nombre es: $_nombre'),
     );
   }
