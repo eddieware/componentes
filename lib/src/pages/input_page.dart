@@ -9,6 +9,8 @@ class _InputPageState extends State<InputPage> {
   String _email='';
   String _nombre='';
   String _fecha='';
+  String _optSeleccionada='Volar';
+  List<String> _poderes = ['Volar','Rayos X', 'Super Aliento','Super Fuerza'];
   TextEditingController _inputFieldDateController = new TextEditingController();
 
 
@@ -33,6 +35,8 @@ class _InputPageState extends State<InputPage> {
           _crearPassword(),
           Divider(),
           _crearFecha(context),
+           Divider(),
+           _crearDropdown(),
            Divider(),
           _crearPersona(),
         ],
@@ -164,12 +168,51 @@ class _InputPageState extends State<InputPage> {
 
   }
 // imprime el nombre en pantalla en modo Binding
+
+List <DropdownMenuItem<String>> getOpcionesDropdown(){
+  List <DropdownMenuItem<String>> lista = new List();
+
+  _poderes.forEach((poder) {
+
+    lista.add(DropdownMenuItem(
+      child: Text(poder),
+      value: poder,
+    ));
+
+   });
+   return lista;
+}
+
+Widget _crearDropdown(){
+
+  return Row(children: <Widget>[
+    Icon(Icons.select_all),
+    SizedBox(width: 30,),
+    Expanded(
+          child: DropdownButton(
+      value: _optSeleccionada,
+      items:getOpcionesDropdown(),
+      onChanged:(opt){
+       // print(opt);// imprime la opcion seleccionada en el drop down
+       setState(() {
+         _optSeleccionada= opt;
+       });
+
+      }),
+    )
+
+  ],);
+
+   
+}
+
   Widget _crearPersona(){
     
     return ListTile(
       
       title: Text('Nombre es: $_nombre'),
       subtitle: Text('Email: $_email'),
+      trailing: Text(_optSeleccionada),
     );
   }
 }
