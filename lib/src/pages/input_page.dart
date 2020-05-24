@@ -6,10 +6,16 @@ class InputPage extends StatefulWidget {
 }
 //https://www.netflix.com/watch/80185236?trackId=155573560
 class _InputPageState extends State<InputPage> {
-   String _email='';
+  String _email='';
   String _nombre='';
+  String _fecha='';
+  TextEditingController _inputFieldDateController = new TextEditingController();
+
 
   @override
+  // entrada del context en el scaffold ewsta funcion
+  // viene por defauld y de ahi lo vas pasando a las demas
+  //funciones que lo requieren enviandolo por el constructor
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -25,6 +31,8 @@ class _InputPageState extends State<InputPage> {
           _crearEmail(),
           Divider(),
           _crearPassword(),
+          Divider(),
+          _crearFecha(context),
            Divider(),
           _crearPersona(),
         ],
@@ -103,16 +111,55 @@ class _InputPageState extends State<InputPage> {
         labelText: 'Password',
         suffixIcon: Icon(Icons.lock_open),
         icon: Icon(Icons.lock)
-
-
       ),
 
       onChanged: (valor)=>setState(() {
            _email = valor;
-        })
-       ,
+        }),
+    );
+  }
+
+ Widget _crearFecha(BuildContext context){
+
+    return TextField(
+      enableInteractiveSelection: false,
+      controller: _inputFieldDateController, //controlador para setear texto
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          //personalizar que tan pronunciados quiero los border
+          borderRadius: BorderRadius.circular(20)
+        ),
+    
+        hintText: 'Fecha de nacimiento',
+        labelText: 'Fecha de nacimiento',
+        suffixIcon: Icon(Icons.perm_contact_calendar),
+        icon: Icon(Icons.calendar_today)
+      ),
+      onTap: (){
+
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDate(context); // se crea una funcion enviando el 
+        //contexto para que flutter sepa en que posicion colocarlo
+      },
     );
 
+  }
+
+  _selectDate(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025)
+
+    );
+
+    if(picked != null){
+      setState(() {
+        _fecha= picked.toString();
+        _inputFieldDateController.text = _fecha;
+      });
+    }
 
   }
 // imprime el nombre en pantalla en modo Binding
