@@ -7,6 +7,7 @@ class SliderPage extends StatefulWidget {
 
 class _SliderPageState extends State<SliderPage> {
   double _valorSlider = 100.0;
+  bool _bloquearCheck= false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,8 @@ class _SliderPageState extends State<SliderPage> {
         child:Column(
           children: <Widget>[
             _crearSlider(),
+            _crearCheckbox(),
+            _crearSwitch(),
             Expanded(child: _crearImagen()),
           ],
         )
@@ -29,6 +32,7 @@ class _SliderPageState extends State<SliderPage> {
   }
 
   Widget _crearSlider(){
+
     
     return Slider(
       activeColor: Colors.indigoAccent,
@@ -37,8 +41,8 @@ class _SliderPageState extends State<SliderPage> {
       value: _valorSlider,
       min: 10.0,
       max: 400.0,
-      onChanged: (valor){
-        print(valor);
+      onChanged: ( _bloquearCheck) ? null : (valor){
+        //rint(valor);
         
         setState(() {
           _valorSlider=valor;
@@ -49,6 +53,48 @@ class _SliderPageState extends State<SliderPage> {
       
     );
   }
+
+    Widget _crearCheckbox(){
+
+      // return Checkbox(
+      //   value: _bloquearCheck,
+      //   onChanged: (valor){
+      //     setState(() {
+      //       _bloquearCheck = valor;
+      //     });
+          
+      //   }
+      //   );
+
+      return CheckboxListTile(
+        title: Text('Bloquear Check'),
+        value: _bloquearCheck,
+        onChanged: (valor){
+          setState(() {
+            _bloquearCheck = valor;
+          });
+          
+        }
+        );    
+  }
+
+  Widget _crearSwitch(){
+
+
+      return SwitchListTile(
+        title: Text('Bloquear Check'),
+        value: _bloquearCheck,
+        onChanged: (valor){
+          setState(() {
+            _bloquearCheck = valor;
+          });
+          
+        }
+        );
+
+  }
+
+
   Widget _crearImagen(){
     return Image(
       image: NetworkImage('https://1.bp.blogspot.com/-4Zwhsf3xmo4/XTe_K5QfGAI/AAAAAAAASsU/00z8_GbhNo03FsmarEyJq-rArsM2hczLQCLcBGAs/s2560/next-iron-spider-man-6o-1080x1920.jpg'),
@@ -57,4 +103,5 @@ class _SliderPageState extends State<SliderPage> {
 
       );
   }
+ 
 }
