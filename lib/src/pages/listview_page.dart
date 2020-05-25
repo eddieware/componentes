@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class ListaPage extends StatefulWidget {
@@ -10,9 +12,11 @@ class _ListaPageState extends State<ListaPage> {
 //scroll controler es para poder detectar el fin y cargar mas
 
 ScrollController _scrollController = new ScrollController();
+// el scrolll controller es para monitorear todos los cambios en el scroll
 
   List<int> _listaNumeros = new List();
   int _ultimoItem=0;
+  bool _isloading = false;
 
   //para iniciar la clase initState y agregar el metodo cargar 10
   @override
@@ -25,11 +29,20 @@ ScrollController _scrollController = new ScrollController();
       //se dispara cada que se mueve el scroll
       
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        _agregar10();
+        //_agregar10();
+
+        fetchData();
         
       }
 
      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _scrollController.dispose();
   }
 
   @override
@@ -38,7 +51,16 @@ ScrollController _scrollController = new ScrollController();
       appBar: AppBar(
         title: Text('Listas'),
       ),
-      body:_crearLista() ,
+      body:
+      //el loading se creara en esta seccion para que aparesca en cima
+      Stack(
+        children: <Widget>[
+        _crearLista(),
+        _crearLoading(),
+        ],
+      )
+      
+      
     );
   }
 
@@ -78,4 +100,63 @@ ScrollController _scrollController = new ScrollController();
     }
 
   }
+
+  Future<Null> fetchData() async{
+
+    _isloading = true;
+
+    setState(() {
+      
+    });
+    final duration = new Duration(seconds: 1);
+    return new Timer(duration, respuestaHTTP);//no se agregaron los parentesis para que no
+    //se ejecute en ese instante solo es la referencia a ese metodo
+    
+  }
+
+  void respuestaHTTP(){
+    //se regresa a false para indicar que ya termino de cargar
+    
+    setState(() {
+      _isloading =false;
+    });
+    _scrollController.animateTo(
+      _scrollController.position.pixels+100,
+      curve: Curves.fastOutSlowIn,
+      duration: Duration(milliseconds: 250)
+    );
+    _agregar10();
+  }
+
+  Widget _crearLoading(){
+
+    if (_isloading){
+
+      return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+
+      children: <Widget>[
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+             CircularProgressIndicator()
+
+          ],
+        ),
+        SizedBox(height:15.0)
+
+      ],
+    );
+      
+
+    }else{
+      return Container();
+    }
+
+    
+  }
+
 }
