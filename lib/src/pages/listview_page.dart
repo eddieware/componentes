@@ -65,29 +65,51 @@ ScrollController _scrollController = new ScrollController();
   }
 
   Widget _crearLista(){
-    return ListView.builder(
-      controller: _scrollController, // se asigna para poder mover de posicion
-      itemCount: _listaNumeros.length ,
-      itemBuilder: (BuildContext context, int index){
-        //el index en el xonstructor se agrega porque se requiere
-        //la lista numeros se asocia con el index para alojarlos en imagen y pasarlos
-        //y pasarlos alinterpolationString
+    return RefreshIndicator(
 
-        final imagen = _listaNumeros[index];
-       // print(_listaNumeros[index]);
-        //print('Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        onRefresh:obtenerPagina1 ,
 
-        return FadeInImage(
+        child: ListView.builder(
+        controller: _scrollController, // se asigna para poder mover de posicion
+        itemCount: _listaNumeros.length ,
+        itemBuilder: (BuildContext context, int index){
+          //el index en el xonstructor se agrega porque se requiere
+          //la lista numeros se asocia con el index para alojarlos en imagen y pasarlos
+          //y pasarlos alinterpolationString
+
+          final imagen = _listaNumeros[index];
+         // print(_listaNumeros[index]);
+          //print('Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+          return FadeInImage(
+            
+            image: NetworkImage('https://picsum.photos/500/300?image$imagen'),
+            placeholder: AssetImage('assets/jar-loading.gif'),
+            );
           
-          image: NetworkImage('https://picsum.photos/500/300?image$imagen'),
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          );
+        },
         
-      },
-      
-      );
+        ),
+    );
   }
 
+
+  Future<Null> obtenerPagina1() async {
+
+    final duration = new Duration(seconds: 1);
+    new Timer (duration,(){
+
+      _listaNumeros.clear();
+      _ultimoItem++;
+      _agregar10();
+
+      
+
+    });
+
+    return Future.delayed(duration);
+
+  }
   //mewtodo para agregar 10 imagenes mas a la lista
 
   void _agregar10(){
@@ -96,6 +118,11 @@ ScrollController _scrollController = new ScrollController();
 
       _ultimoItem++;
       _listaNumeros.add(_ultimoItem);
+      //print(' funcion agregar 10');
+
+      setState(() {
+        
+      });
       
     }
 
